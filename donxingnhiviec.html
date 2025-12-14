@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Phòng Chống Tội Phạm Mạng - TH & THCS Bình Sơn</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #0a0015, #1a0033, #2d004d);
+  color: #e0e0e0;
+  min-height: 100vh;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Animated background particles */
+.particles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.particle {
+  position: absolute;
+  background: radial-gradient(circle, rgba(236, 72, 153, 0.3), transparent);
+  border-radius: 50%;
+  animation: float 20s infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) translateX(0); }
+  25% { transform: translateY(-30px) translateX(20px); }
+  50% { transform: translateY(-60px) translateX(-20px); }
+  75% { transform: translateY(-30px) translateX(10px); }
+}
+
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: rgba(10, 0, 30, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+  border-bottom: 1px solid rgba(147, 51, 234, 0.3);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+}
+
+.logo {
+  font-size: 24px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #ec4899, #8b5cf6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 140px 20px 60px;
+  position: relative;
+  z-index: 1;
+}
+
+.page {
+  display: none;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+.page.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.hero {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.hero h1 {
+  font-size: 48px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #ec4899, #8b5cf6, #06b6d4);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 20px;
+  line-height: 1.2;
+}
+
+.hero p {
+  font-size: 20px;
+  color: #a78bfa;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  margin-top: 40px;
+}
+
+.menu-item {
+  background: linear-gradient(135deg, rgba(147, 51, 234, 0.15), rgba(236, 72, 153, 0.1));
+  padding: 35px;
+  border-radius: 24px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(147, 51, 234, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.menu-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg, rgba(236, 72, 153, 0.2), rgba(139, 92, 246, 0.2));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.menu-item:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 40px rgba(147, 51, 234, 0.4);
+  border-color: #ec4899;
+}
+
+.menu-item:hover::before {
+  opacity: 1;
+}
+
+.menu-item-content {
+  position: relative;
+  z-index: 1;
+}
+
+.menu-item .icon {
+  font-size: 48px;
+  margin-bottom: 15px;
+  display: block;
+}
+
+.menu-item h3 {
+  font-size: 22px;
+  color: #fbbf24;
+  margin-bottom: 10px;
+}
+
+.menu-item p {
+  color: #c4b5fd;
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.back-btn {
+  margin-bottom: 30px;
+  padding: 12px 28px;
+  border-radius: 50px;
+  border: 2px solid #9333ea;
+  background: linear-gradient(135deg, rgba(147, 51, 234, 0.2), rgba(236, 72, 153, 0.2));
+  color: #ec4899;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 16px;
+}
+
+.back-btn:hover {
+  background: linear-gradient(135deg, rgba(147, 51, 234, 0.4), rgba(236, 72, 153, 0.4));
+  transform: translateX(-5px);
+  box-shadow: 0 5px 20px rgba(147, 51, 234, 0.4);
+}
+
+.page h2 {
+  font-size: 36px;
+  color: #fbbf24;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.content-box {
+  background: linear-gradient(135deg, rgba(147, 51, 234, 0.15), rgba(236, 72, 153, 0.1));
+  padding: 35px;
+  border-radius: 24px;
+  border: 1px solid rgba(147, 51, 234, 0.3);
+  line-height: 1.8;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.content-box p {
+  margin-bottom: 20px;
+  font-size: 17px;
+  color: #e0e0e0;
+}
+
+.content-box p:last-child {
+  margin-bottom: 0;
+}
+
+.highlight-box {
+  background: rgba(236, 72, 153, 0.15);
+  border-left: 4px solid #ec4899;
+  padding: 20px;
+  margin: 25px 0;
+  border-radius: 12px;
+}
+
+.tip-list {
+  list-style: none;
+  margin-top: 20px;
+}
+
+.tip-list li {
+  padding: 15px;
+  margin: 15px 0;
+  background: rgba(139, 92, 246, 0.1);
+  border-radius: 12px;
+  border-left: 3px solid #8b5cf6;
+  transition: all 0.3s ease;
+}
+
+.tip-list li:hover {
+  background: rgba(139, 92, 246, 0.2);
+  transform: translateX(5px);
+}
+
+footer {
+  text-align: center;
+  margin-top: 80px;
+  padding: 40px;
+  background: rgba(10, 0, 30, 0.5);
+  border-top: 1px solid rgba(147, 51, 234, 0.3);
+  position: relative;
+  z-index: 1;
+}
+
+footer p {
+  font-size: 16px;
+  color: #a78bfa;
+  line-height: 1.8;
+}
+
+footer b {
+  color: #ec4899;
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 32px;
+  }
+  
+  .menu-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  header {
+    padding: 15px 20px;
+  }
+  
+  .logo {
+    font-size: 18px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- Animated background -->
+<div class="particles" id="particles"></div>
+
+<header>
+  <div class="logo">
+    🛡️ Phòng Chống Tội Phạm Mạng
+  </div>
+</header>
+
+<div class="container">
+
+  <div id="home" class="page active">
+    <div class="hero">
+      <h1>Bảo Vệ Bản Thân Trên Không Gian Mạng</h1>
+      <p>Website tuyên truyền phòng chống tội phạm mạng cho học sinh</p>
+    </div>
+
+    <div class="menu-grid">
+      <div class="menu-item" onclick="showPage('page1')">
+        <div class="menu-item-content">
+          <span class="icon">🔍</span>
+          <h3>Tội phạm mạng là gì?</h3>
+          <p>Tìm hiểu khái niệm và đặc điểm của tội phạm mạng trong kỷ nguyên số</p>
+        </div>
+      </div>
+      
+      <div class="menu-item" onclick="showPage('page2')">
+        <div class="menu-item-content">
+          <span class="icon">⚠️</span>
+          <h3>Các dạng phổ biến</h3>
+          <p>Nhận biết những thủ đoạn lừa đảo và tội phạm mạng thường gặp</p>
+        </div>
+      </div>
+      
+      <div class="menu-item" onclick="showPage('page3')">
+        <div class="menu-item-content">
+          <span class="icon">🎯</span>
+          <h3>Dấu hiệu nhận biết</h3>
+          <p>Phát hiện sớm các dấu hiệu của hành vi lừa đảo trực tuyến</p>
+        </div>
+      </div>
+      
+      <div class="menu-item" onclick="showPage('page4')">
+        <div class="menu-item-content">
+          <span class="icon">🛡️</span>
+          <h3>Cách phòng tránh</h3>
+          <p>Hướng dẫn bảo vệ bản thân và sử dụng Internet an toàn</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="page1" class="page">
+    <button class="back-btn" onclick="showPage('home')">← Quay lại</button>
+    <h2>🔍 Tội phạm mạng là gì?</h2>
+    <div class="content-box">
+      <p><strong>Tội phạm mạng</strong> là những hành vi vi phạm pháp luật được thực hiện thông qua Internet, mạng máy tính, điện thoại thông minh và các thiết bị công nghệ số. Đây là loại tội phạm xuất hiện cùng với sự phát triển mạnh mẽ của công nghệ thông tin.</p>
+
+      <div class="highlight-box">
+        <p><strong>⚡ Điểm khác biệt:</strong> Khác với tội phạm truyền thống, tội phạm mạng không cần tiếp xúc trực tiếp với nạn nhân. Kẻ xấu chỉ cần ngồi một chỗ và sử dụng thiết bị có kết nối Internet để thực hiện hành vi phạm tội.</p>
+      </div>
+
+      <p>Học sinh ngày nay thường xuyên sử dụng mạng xã hội, chơi game online và học tập trực tuyến. Nếu không có kiến thức bảo vệ bản thân, các em rất dễ trở thành nạn nhân của tội phạm mạng.</p>
+
+      <p><strong>Hậu quả nghiêm trọng:</strong> Tội phạm mạng có thể gây ra nhiều thiệt hại như mất tiền, mất tài khoản cá nhân, lộ thông tin riêng tư, bị đe dọa tinh thần và ảnh hưởng nghiêm trọng đến học tập.</p>
+
+      <p>Vì vậy, hiểu rõ khái niệm tội phạm mạng là bước đầu quan trọng giúp học sinh nâng cao ý thức cảnh giác và sử dụng Internet an toàn.</p>
+    </div>
+  </div>
+
+  <div id="page2" class="page">
+    <button class="back-btn" onclick="showPage('home')">← Quay lại</button>
+    <h2>⚠️ Các dạng tội phạm mạng phổ biến</h2>
+    <div class="content-box">
+      <ul class="tip-list">
+        <li><strong>💰 Lừa đảo chiếm đoạt tài sản:</strong> Kẻ xấu giả mạo người thân hoặc bạn bè để nhắn tin yêu cầu chuyển tiền gấp vì "có việc khẩn cấp".</li>
+        
+        <li><strong>🔓 Hack tài khoản mạng xã hội:</strong> Sau khi chiếm quyền kiểm soát tài khoản, kẻ gian sử dụng để lừa danh sách bạn bè của nạn nhân.</li>
+        
+        <li><strong>👤 Giả mạo danh tính:</strong> Sử dụng hình ảnh và tên của người khác để tạo tài khoản giả nhằm lừa đảo hoặc bôi nhọ danh dự.</li>
+        
+        <li><strong>📱 Phát tán thông tin xấu độc:</strong> Lan truyền tin giả, hình ảnh không phù hợp hoặc thông tin gây hoang mang dư luận.</li>
+        
+        <li><strong>💸 Tống tiền qua mạng:</strong> Đe dọa tung thông tin nhạy cảm hoặc hình ảnh cá nhân nếu không chuyển tiền.</li>
+        
+        <li><strong>🎮 Dụ dỗ tham gia hoạt động trái pháp luật:</strong> Rủ rê học sinh tham gia cá độ, game cờ bạc trực tuyến hoặc các hành vi vi phạm khác.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="page3" class="page">
+    <button class="back-btn" onclick="showPage('home')">← Quay lại</button>
+    <h2>🎯 Dấu hiệu nhận biết tội phạm mạng</h2>
+    <div class="content-box">
+      <p>Để bảo vệ bản thân, học sinh cần nhận biết các dấu hiệu cảnh báo sau:</p>
+      
+      <ul class="tip-list">
+        <li><strong>🔑 Yêu cầu cung cấp mật khẩu:</strong> Bất kỳ ai yêu cầu bạn cung cấp mật khẩu, mã OTP hoặc mã xác thực đều đáng nghi ngờ. Không một tổ chức nào cần mật khẩu của bạn!</li>
+        
+        <li><strong>🔗 Gửi link lạ:</strong> Đường link kèm lời nhắn hấp dẫn như "Xem ảnh của bạn đây" hoặc đe dọa "Tài khoản sẽ bị khóa nếu không click".</li>
+        
+        <li><strong>👥 Tài khoản mới lập:</strong> Người lạ nhưng nói chuyện thân thiết bất thường, tỏ vẻ biết rõ về bạn hoặc gia đình bạn.</li>
+        
+        <li><strong>🎁 Hứa hẹn phần thưởng lớn:</strong> Các chương trình quà tặng hấp dẫn nhưng yêu cầu làm nhiệm vụ trước như chia sẻ thông tin, chuyển tiền phí hay mời bạn bè.</li>
+        
+        <li><strong>⏰ Gây áp lực thời gian:</strong> Thúc giục phải quyết định ngay lập tức, không cho thời gian suy nghĩ hay hỏi ý kiến người lớn.</li>
+      </ul>
+
+      <div class="highlight-box">
+        <p><strong>💡 Lưu ý quan trọng:</strong> Khi có bất kỳ dấu hiệu đáng ngờ nào, hãy dừng lại và hỏi ý kiến thầy cô, phụ huynh hoặc người lớn đáng tin cậy!</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="page4" class="page">
+    <button class="back-btn" onclick="showPage('home')">← Quay lại</button>
+    <h2>🛡️ Cách phòng tránh tội phạm mạng</h2>
+    <div class="content-box">
+      <p>Học sinh cần thực hiện các biện pháp sau để bảo vệ bản thân trên không gian mạng:</p>
+      
+      <ul class="tip-list">
+        <li><strong>🔒 Bảo mật thông tin cá nhân:</strong> Không chia sẻ họ tên đầy đủ, địa chỉ nhà, số điện thoại, tên trường học hoặc thông tin gia đình cho người lạ trên mạng.</li>
+        
+        <li><strong>🚫 Cảnh giác với link lạ:</strong> Không nhấn vào đường link không rõ nguồn gốc, đặc biệt là link rút gọn hoặc link từ người lạ gửi.</li>
+        
+        <li><strong>🔐 Sử dụng mật khẩu mạnh:</strong> Tạo mật khẩu có ít nhất 8 ký tự, kết hợp chữ hoa, chữ thường, số và ký tự đặc biệt. Thay đổi mật khẩu định kỳ 3-6 tháng một lần.</li>
+        
+        <li><strong>👨‍👩‍👧‍👦 Báo ngay cho người lớn:</strong> Khi phát hiện tin nhắn đáng ngờ, tài khoản bị hack hoặc bị đe dọa, cần báo ngay cho thầy cô, phụ huynh hoặc cơ quan chức năng.</li>
+        
+        <li><strong>📱 Cài đặt bảo mật:</strong> Bật xác thực hai yếu tố cho các tài khoản quan trọng, thường xuyên cập nhật phần mềm và ứng dụng.</li>
+        
+        <li><strong>🤝 Kết bạn thận trọng:</strong> Chỉ kết bạn với người quen biết ngoài đời thực, cẩn thận với lời mời kết bạn từ người lạ.</li>
+        
+        <li><strong>📚 Học hỏi liên tục:</strong> Cập nhật kiến thức về an toàn mạng, tham gia các buổi tập huấn về phòng chống tội phạm mạng tại trường.</li>
+      </ul>
+
+      <div class="highlight-box">
+        <p><strong>📞 Số điện thoại khẩn cấp:</strong></p>
+        <p>• Tổng đài báo tin tội phạm công nghệ cao: <strong>0692.123.456</strong></p>
+        <p>• Công an tỉnh/thành phố: <strong>113</strong></p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <p>Website do <b>Bùi Bảo Khánh – Lớp 8B</b> lập trình<br>
+  Trường TH & THCS Bình Sơn<br>
+  <small style="color: #8b5cf6;">Hãy cùng nhau xây dựng môi trường mạng an toàn!</small></p>
+</footer>
+
+<script>
+// Create animated background particles
+function createParticles() {
+  const container = document.getElementById('particles');
+  const particleCount = 20;
+  
+  for (let i = 0; i < particleCount; i++) {
+    const particle = document.createElement('div');
+    particle.className = 'particle';
+    
+    const size = Math.random() * 100 + 50;
+    particle.style.width = size + 'px';
+    particle.style.height = size + 'px';
+    particle.style.left = Math.random() * 100 + '%';
+    particle.style.top = Math.random() * 100 + '%';
+    particle.style.animationDelay = Math.random() * 20 + 's';
+    particle.style.animationDuration = (Math.random() * 10 + 15) + 's';
+    
+    container.appendChild(particle);
+  }
+}
+
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// Initialize
+createParticles();
+</script>
+
+</body>
+</html>
